@@ -9,12 +9,10 @@
     imports =
         [
             ./hardware-configuration.nix
-            ../../system/nas-sync.nix
             ../../system/general.nix
             ../../system/hyprland.nix
             ../../system/sddm.nix
             ../../system/steam.nix
-            ../../system/docker.nix
         ];
 
     networking.hostName = nixos; # Define your hostname.
