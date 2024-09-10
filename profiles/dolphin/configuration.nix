@@ -17,64 +17,8 @@
             ../../system/docker.nix
         ];
 
-    networking.hostName = hostname; # Define your hostname.
-    system.stateVersion = "23.05"; # Did you read the comment?
+    networking.hostName = nixos; # Define your hostname.
+    system.stateVersion = "24.05"; # Did you read the comment?
 
     services.xserver.enable = true;
-
-    # Sync with NAS
-    nas.always-sync = true;
-    nas.rclone-device = "NAS";
-    nas.interval = 5*60;
-    nas.sync-locations = 
-    let
-        home = "/home/${username}";
-    in
-    [
-        { local = "${home}/3d-print";               remote = "3d-print";            }
-        { local = "${home}/Pictures";               remote = "general/pictures";    }
-        { local = "${home}/Documents/opskrifter";   remote = "general/opskrifter";  }
-        { local = "${home}/Documents/papirer";      remote = "private/papirer";     }
-        { local = "${home}/Documents/job";          remote = "private/job";         }
-        { local = "${home}/Documents/uni/lectures"; remote = "uni";                 }
-    ];
-    nas.remote-backup-dir = "backups/manual";
-
-    # Cloud drives
-    fileSystems = 
-    let
-        opts = [ "x-systemd.automount" "noauto" "x-systemd.after=network-online" ];
-        nas = "192.168.0.200";
-    in
-    {
-        "/media/uni-remote" = {
-            device = "${nas}:/uni";
-            fsType = "nfs";
-            options = opts;
-            };
-
-        "/media/3d-print" = {
-            device = "${nas}:/3d-print";
-            fsType = "nfs";
-            options = opts;
-        };
-
-        "/media/music" = {
-            device = "${nas}:/music";
-            fsType = "nfs";
-            options = opts;
-        };
-
-        "/media/private" = {
-            device = "${nas}:/private";
-            fsType = "nfs";
-            options = opts;
-        };
-
-        "/media/general" = {
-            device = "${nas}:/general";
-            fsType = "nfs";
-            options = opts;
-        };
-    };
 }
