@@ -2,7 +2,7 @@
 Run the following command on any NixOs machine.
 
 ```bash
-nix run github:BalderHolst/nix-config#install \
+nix run github:zwangsfixiert/nix-config#install \
     --extra-experimental-features nix-command \
     --extra-experimental-features flakes
 ```
